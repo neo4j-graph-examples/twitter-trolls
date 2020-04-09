@@ -6,7 +6,7 @@
 :tags: 
 :author: Will Lyon
 :use-load-script: 
-:use-dump-file:
+:use-dump-file: https://graph-examples-dump-files.s3.amazonaws.com/twitter-trolls.dump
 :use-plugin: 
 :target-db-version: 3.5.14
 :bloom-perspective: 
