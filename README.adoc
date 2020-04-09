@@ -1,0 +1,34 @@
+:name: twitter-trolls
+:long_name: Russian Twitter Trolls
+:description: Explore data released by NBC News from their investigation into Russian Twitter Trolls around the 2016 US election.
+:icon: 
+:logo: 
+:tags: 
+:author: Will Lyon
+:use-load-script: 
+:use-dump-file:
+:use-plugin: 
+:target-db-version: 3.5.14
+:bloom-perspective: 
+:guide: 
+:rendered-guide: https://guides.neo4j.com/sandbox/twitter-trolls/index.html
+:model: documentation/img/datamodel.png
+:model-guide:
+:todo: Check links in documents, locate the associated logo/icons
+image::{logo}[]
+
+= {long_name} Graph Example
+
+Description: {description}
+
+TODO: {todo}
+
+image::{model}[]
+
+=== Setup
+
+This is for version: {target-db-version}
+
+unrendered guide: {guide}
+
+rendered guide available from: {rendered-guide}
