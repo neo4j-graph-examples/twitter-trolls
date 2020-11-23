@@ -1,5 +1,5 @@
 :name: twitter-trolls
-:long_name: Russian Twitter Trolls
+:long-name: Russian Twitter Trolls
 :description: Explore data released by NBC News from their investigation into Russian Twitter Trolls around the 2016 US election
 :icon: 
 :logo: documentation/img/community.png
@@ -28,7 +28,7 @@ RETURN t.created_str as createdTime +
 :todo: 
 image::{logo}[width=100]
 
-= {long_name} Graph Example
+== {long-name} Graph Example
 
 Description: _{description}_
 
