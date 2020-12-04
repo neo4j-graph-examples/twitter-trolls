@@ -1,7 +1,7 @@
 {
     "name": "twitter-trolls",
     "description":"Explore data released by NBC News from their investigation into Russian Twitter Trolls around the 2016 US election",
-    "install": [
+    "dbms": [
         {
             "dumpFile": "data/twitter-trolls-35.dump",
             "targetNeo4jVersion":"3.5"
