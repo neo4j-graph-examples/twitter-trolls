@@ -30,7 +30,7 @@ func runQuery(uri, database, username, password string) (result []string, err er
 	results, err := session.ReadTransaction(func(transaction neo4j.Transaction) (interface{}, error) {
 		result, err := transaction.Run(
 			`
-			MATCH (u:User {screen_name: 'queenofthewo'})-[:POSTED]->(t:Tweet)-[:HAS_TAG]->(ht:Hashtag {tag:$tag})
+			MATCH (u:User {screen_name: 'queenofthewo'})-[:POSTED]->(t:Tweet)-[:HAS_TAG]->(ht:Hashtag {tag:$tag}) 
 			RETURN t.created_str as createdTime
 			`, map[string]interface{}{
 				"tag": "thingsdonebymistake",
