@@ -116,7 +116,7 @@ Nodes and relationships can store arbitrary key-value pair *properties*. This im
 .Execute this query to inspect the datamodel in the database:
 [source,cypher]
 ----
-CALL db.schema()
+call db.schema.visualization()
 ----
 
 ++++
