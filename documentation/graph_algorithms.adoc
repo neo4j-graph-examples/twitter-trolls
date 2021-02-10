@@ -40,13 +40,13 @@ RETURN p LIMIT 1
 <div class="col-lg-9">
 ++++
 
-link:https://neo4j.com/graph-analytics/[Graph algorithms^] are a way to apply analytics to the entire graph to further enhance our understanding of the data. These algorithms fall into three categories: 
+link:https://neo4j.com/graph-analytics/[Graph Algorithms^] are a way to apply analytics to the entire graph to further enhance our understanding of the data. These algorithms fall into three categories: 
 
 * **Centrality** - What are the most important nodes in the network? _PageRank, Betweenness Centrality, Closeness Centrality_
 * **Community detection** - How can the graph be partitioned? _Union Find, Louvain, Label Propagation, Connected Components_
 * **Pathfinding** - What are the shortest paths or best routes available given cost? _Minimum Weight Spanning Tree, All Pairs- and Single Source- Shortest Path, Dijkstra_
 
-We can run these algorithms in Neo4j with Cypher using the link:https://github.com/neo4j-contrib/neo4j-graph-algorithms[Neo4j Graph Algorithms^] procedures.
+We can run these algorithms in Neo4j with Cypher using the link:https://neo4j.com/developer/graph-data-science[Neo4j Graph Data Science^] procedures.
 
 ++++
 </div>
@@ -56,12 +56,12 @@ We can run these algorithms in Neo4j with Cypher using the link:https://github.c
 <div class="col-lg-3">
 ++++
 
-.See what procedures are available in the algo package
+.See what procedures are available in the gds package
 [source,cypher]
 ----
 CALL dbms.procedures() 
 YIELD name, signature, description
-WITH * WHERE name STARTS WITH "algo"
+WITH * WHERE name STARTS WITH "gds"
 RETURN *
 ----
 
@@ -80,7 +80,9 @@ Let's run PageRank over this inferred AMPLIFIED graph to find the most influenti
 .Run PageRank over the inferred troll amplification graph. This will write the results back to a pagerank property on the nodes
 [source,cypher]
 ----
-CALL algo.pageRank("MATCH (t:Troll) RETURN id(t) AS id","MATCH (r1:Troll)-[:POSTED]->(:Tweet)<-[:RETWEETED]-(:Tweet)<-[:POSTED]-(r2:Troll) RETURN id(r2) as source, id(r1) as target", {graph:'cypher'})
+CALL gds.pageRank.write({nodeQuery:"MATCH (t:Troll) RETURN id(t) AS id", 
+relationshipQuery:"MATCH (r1:Troll)-[:POSTED]->(:Tweet)<-[:RETWEETED]-(:Tweet)<-[:POSTED]-(r2:Troll) RETURN id(r2) as source, id(r1) as target",
+writeProperty:'pagerank'})
 ----
 
 .Find Trolls with highest PageRank score
@@ -129,8 +131,9 @@ We can also run community detection over this inferred AMPLIFIED graph to see ho
 .Partition the graph into communities using the Label Propagation algorithm. An additional property `community` is added to each node specifying the community it has been assgined to by the algorithm.
 [source,cypher]
 ----
-CALL algo.labelPropagation("MATCH (t:Troll) RETURN id(t) AS id","MATCH (r1:Troll)-[:POSTED]->(t:Tweet)<-[:RETWEETED]-(:Tweet)<-[:POSTED]-(r2:Troll) RETURN id(r2) AS source, id(r1) AS target, COUNT(t) AS weight","OUTGOING",   {graph:'cypher', write: true, iterations: 200})
-----
+CALL gds.labelPropagation.write({nodeQuery:"MATCH (t:Troll) RETURN id(t) AS id", 
+relationshipQuery:"MATCH (r1:Troll)-[:POSTED]->(:Tweet)<-[:RETWEETED]-(:Tweet)<-[:POSTED]-(r2:Troll) RETURN id(r2) as source, id(r1) as target, count(*) as weight",
+writeProperty:'partition', relationshipWeightProperty:'weight'})----
 
 We can then see which Trolls were assigned to each community:
 
