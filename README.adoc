@@ -17,14 +17,6 @@
 :model: documentation/img/datamodel.png
 :example: documentation/img/example.png
 
-:query: MATCH (u:User {screen_name: 'queenofthewo'})-[:POSTED]->(t:Tweet)-[:HAS_TAG]->(ht:Hashtag {tag:$tag}) +
-RETURN t.created_str as createdTime +
-
-:param-name: tag
-:param-value: thingsdonebymistake
-:result-column: createdTime
-:expected-result: 2017-02-27 15:19:24
-
 :todo: false
 image::{icon}[width=100]
 
@@ -43,9 +35,10 @@ image::{model}[]
 image::{example}[width=600]
 
 .Example Query:
-[source,cypher,subs=attributes]
+[source,cypher,role=query-example,param-name=tag,param-value=thingsdonebymistake,result-column=createdTime,expected-result="2017-02-27 15:19:24"]
 ----
-{query}
+MATCH (u:User {screen_name: 'queenofthewo'})-[:POSTED]->(t:Tweet)-[:HAS_TAG]->(ht:Hashtag {tag:$tag})
+RETURN t.created_str as createdTime
 ----
 
 === Setup
