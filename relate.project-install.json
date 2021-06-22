@@ -7,8 +7,12 @@
             "targetNeo4jVersion":"3.5"
         },
         {
-            "dumpFile": "data/twitter-trolls-40.dump",
-            "targetNeo4jVersion": "^4.0"
+            "dumpFile": "data/twitter-trolls-40-40.dump",
+            "targetNeo4jVersion": "4.0.* - 4.2.*"
+        },
+        {
+            "dumpFile": "data/twitter-trolls-40-43.dump",
+            "targetNeo4jVersion": "^4.3"
         }
     ]
 }
