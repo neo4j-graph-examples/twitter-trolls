@@ -75,14 +75,33 @@ RETURN *
 ++++
 <div class="col-lg-9">
 ++++
+
 Let's run PageRank over this inferred AMPLIFIED graph to find the most influential trolls
+
+To do that, we first project this graph into memory and then run our algorithms on top of that.
+
+[source,cypher]
+----
+call gds.graph.project.cypher('amplified',
+"MATCH (t:Troll) RETURN id(t) AS id", 
+"MATCH (r1:Troll)-[:POSTED]->(:Tweet)<-[:RETWEETED]-(:Tweet)<-[:POSTED]-(r2:Troll) RETURN id(r2) as source, id(r1) as target, count(*) as weight",{})
+----
+
+////
+aggregation with weight?
+[source,cypher]
+----
+MATCH (target:Troll)-[:POSTED]->(:Tweet)<-[:RETWEETED]-(:Tweet)<-[:POSTED]-(source:Troll) 
+WITH gds.alpha.graph.project('amplified', source, target) AS g
+RETURN
+  g.graphName AS graph, g.nodeCount AS nodes, g.relationshipCount AS rels
+----
+////
 
 .Run PageRank over the inferred troll amplification graph. This will write the results back to a pagerank property on the nodes
 [source,cypher]
 ----
-CALL gds.pageRank.write({nodeQuery:"MATCH (t:Troll) RETURN id(t) AS id", 
-relationshipQuery:"MATCH (r1:Troll)-[:POSTED]->(:Tweet)<-[:RETWEETED]-(:Tweet)<-[:POSTED]-(r2:Troll) RETURN id(r2) as source, id(r1) as target",
-writeProperty:'pagerank'})
+CALL gds.pageRank.write('amplified',{writeProperty:'pagerank'});
 ----
 
 .Find Trolls with highest PageRank score
@@ -131,9 +150,8 @@ We can also run community detection over this inferred AMPLIFIED graph to see ho
 .Partition the graph into communities using the Label Propagation algorithm. An additional property `community` is added to each node specifying the community it has been assgined to by the algorithm.
 [source,cypher]
 ----
-CALL gds.labelPropagation.write({nodeQuery:"MATCH (t:Troll) RETURN id(t) AS id", 
-relationshipQuery:"MATCH (r1:Troll)-[:POSTED]->(:Tweet)<-[:RETWEETED]-(:Tweet)<-[:POSTED]-(r2:Troll) RETURN id(r2) as source, id(r1) as target, count(*) as weight",
-writeProperty:'partition', relationshipWeightProperty:'weight'})----
+CALL gds.labelPropagation.write('amplified', {writeProperty:'partition', relationshipWeightProperty:'weight'})
+----
 
 We can then see which Trolls were assigned to each community:
 

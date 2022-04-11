@@ -616,11 +616,11 @@ RETURN p LIMIT 1<!--/code--></pre>
 </div>
 <div class="col-lg-3">
 <div class="listingblock">
-<div class="title">See what procedures are available in the gds package</div>
+<div class="title">See what procedures are available in the algo package</div>
 <div class="content">
 <pre mode="cypher"  class="highlight pre-scrollable programlisting cm-s-neo code runnable standalone-example ng-binding" data-lang="cypher" lang="cypher"><!--code class="cypher language-cypher"-->CALL dbms.procedures()
 YIELD name, signature, description
-WITH * WHERE name STARTS WITH "gds"
+WITH * WHERE name STARTS WITH "algo"
 RETURN *<!--/code--></pre>
 </div>
 </div>
@@ -640,12 +640,20 @@ RETURN *<!--/code--></pre>
 <div class="paragraph">
 <p>Let&#8217;s run PageRank over this inferred AMPLIFIED graph to find the most influential trolls</p>
 </div>
+<div class="paragraph">
+<p>To do that, we first project this graph into memory and then run our algorithms on top of that.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre mode="cypher"  class="highlight pre-scrollable programlisting cm-s-neo code runnable standalone-example ng-binding" data-lang="cypher" lang="cypher"><!--code class="cypher language-cypher"-->call gds.graph.project.cypher('amplified',
+"MATCH (t:Troll) RETURN id(t) AS id",
+"MATCH (r1:Troll)-[:POSTED]-&gt;(:Tweet)&lt;-[:RETWEETED]-(:Tweet)&lt;-[:POSTED]-(r2:Troll) RETURN id(r2) as source, id(r1) as target, count(*) as weight",{})<!--/code--></pre>
+</div>
+</div>
 <div class="listingblock">
 <div class="title">Run PageRank over the inferred troll amplification graph. This will write the results back to a pagerank property on the nodes</div>
 <div class="content">
-<pre mode="cypher"  class="highlight pre-scrollable programlisting cm-s-neo code runnable standalone-example ng-binding" data-lang="cypher" lang="cypher"><!--code class="cypher language-cypher"-->CALL gds.pageRank.write({nodeQuery:"MATCH (t:Troll) RETURN id(t) AS id", 
-  relationshipQuery:"MATCH (r1:Troll)-[:POSTED]->(:Tweet)<-[:RETWEETED]-(:Tweet)<-[:POSTED]-(r2:Troll) RETURN id(r2) as source, id(r1) as target",
-  writeProperty:'pagerank'})<!--/code--></pre>
+<pre mode="cypher"  class="highlight pre-scrollable programlisting cm-s-neo code runnable standalone-example ng-binding" data-lang="cypher" lang="cypher"><!--code class="cypher language-cypher"-->CALL gds.pageRank.write('amplified', {writeProperty:'pagerank'})<!--/code--></pre>
 </div>
 </div>
 <div class="listingblock">
@@ -689,9 +697,7 @@ RETURN ht.tag, COUNT(tw) AS num ORDER BY num DESC LIMIT 25<!--/code--></pre>
 <div class="listingblock">
 <div class="title">Partition the graph into communities using the Label Propagation algorithm. An additional property <code>community</code> is added to each node specifying the community it has been assgined to by the algorithm.</div>
 <div class="content">
-<pre mode="cypher"  class="highlight pre-scrollable programlisting cm-s-neo code runnable standalone-example ng-binding" data-lang="cypher" lang="cypher"><!--code class="cypher language-cypher"-->CALL gds.labelPropagation.write({nodeQuery:"MATCH (t:Troll) RETURN id(t) AS id", 
-  relationshipQuery:"MATCH (r1:Troll)-[:POSTED]->(:Tweet)<-[:RETWEETED]-(:Tweet)<-[:POSTED]-(r2:Troll) RETURN id(r2) as source, id(r1) as target, count(*) as weight",
-  writeProperty:'partition', relationshipWeightProperty:'weight'})<!--/code--></pre>
+<pre mode="cypher"  class="highlight pre-scrollable programlisting cm-s-neo code runnable standalone-example ng-binding" data-lang="cypher" lang="cypher"><!--code class="cypher language-cypher"-->CALL gds.labelPropagation.write('amplified', {writeProperty:'partition', relationshipWeightProperty:'weight'});<!--/code--></pre>
 </div>
 </div>
 <div class="paragraph">
