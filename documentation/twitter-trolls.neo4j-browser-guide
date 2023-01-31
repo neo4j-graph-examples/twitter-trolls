@@ -338,7 +338,7 @@ ORDER BY count DESC<!--/code--></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre mode="cypher"  class="highlight pre-scrollable programlisting cm-s-neo code runnable standalone-example ng-binding" data-lang="cypher" lang="cypher"><!--code class="cypher language-cypher"-->MATCH (u:Troll) WHERE EXISTS(u.followers_count)
+<pre mode="cypher"  class="highlight pre-scrollable programlisting cm-s-neo code runnable standalone-example ng-binding" data-lang="cypher" lang="cypher"><!--code class="cypher language-cypher"-->MATCH (u:Troll) WHERE u.followers_count IS NOT NULL
 RETURN u.screen_name AS screen_name, u.followers_count AS followers
 ORDER BY followers DESC LIMIT 50<!--/code--></pre>
 </div>
@@ -659,14 +659,14 @@ RETURN *<!--/code--></pre>
 <div class="listingblock">
 <div class="title">Find Trolls with highest PageRank score</div>
 <div class="content">
-<pre mode="cypher"  class="highlight pre-scrollable programlisting cm-s-neo code runnable standalone-example ng-binding" data-lang="cypher" lang="cypher"><!--code class="cypher language-cypher"-->MATCH (t:Troll) WHERE EXISTS(t.pagerank)
+<pre mode="cypher"  class="highlight pre-scrollable programlisting cm-s-neo code runnable standalone-example ng-binding" data-lang="cypher" lang="cypher"><!--code class="cypher language-cypher"-->MATCH (t:Troll) WHERE t.pagerank IS NOT NULL
 RETURN t.screen_name AS troll, t.pagerank AS pagerank ORDER BY pagerank DESC LIMIT 25<!--/code--></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">What are the top trolls tweeting about?</div>
 <div class="content">
-<pre mode="cypher"  class="highlight pre-scrollable programlisting cm-s-neo code runnable standalone-example ng-binding" data-lang="cypher" lang="cypher"><!--code class="cypher language-cypher"-->MATCH (t:Troll) WHERE EXISTS(t.pagerank)
+<pre mode="cypher"  class="highlight pre-scrollable programlisting cm-s-neo code runnable standalone-example ng-binding" data-lang="cypher" lang="cypher"><!--code class="cypher language-cypher"-->MATCH (t:Troll) WHERE t.pagerank IS NOT NULL
 WITH t ORDER BY t.pagerank LIMIT 25
 MATCH (t)-[:POSTED]-&gt;(tw:Tweet)-[:HAS_TAG]-(ht:Hashtag)
 RETURN ht.tag, COUNT(tw) AS num ORDER BY num DESC LIMIT 25<!--/code--></pre>
@@ -705,7 +705,7 @@ RETURN ht.tag, COUNT(tw) AS num ORDER BY num DESC LIMIT 25<!--/code--></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre mode="cypher"  class="highlight pre-scrollable programlisting cm-s-neo code runnable standalone-example ng-binding" data-lang="cypher" lang="cypher"><!--code class="cypher language-cypher"-->MATCH (t:Troll) WHERE EXISTS(t.partition)
+<pre mode="cypher"  class="highlight pre-scrollable programlisting cm-s-neo code runnable standalone-example ng-binding" data-lang="cypher" lang="cypher"><!--code class="cypher language-cypher"-->MATCH (t:Troll) WHERE t.partition IS NOT NULL
 RETURN COLLECT(t.screen_name) AS members, t.partition AS community
 ORDER BY SIZE(members) DESC LIMIT 10<!--/code--></pre>
 </div>
@@ -715,7 +715,7 @@ ORDER BY SIZE(members) DESC LIMIT 10<!--/code--></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre mode="cypher"  class="highlight pre-scrollable programlisting cm-s-neo code runnable standalone-example ng-binding" data-lang="cypher" lang="cypher"><!--code class="cypher language-cypher"-->MATCH (t:Troll) WHERE EXISTS(t.partition)
+<pre mode="cypher"  class="highlight pre-scrollable programlisting cm-s-neo code runnable standalone-example ng-binding" data-lang="cypher" lang="cypher"><!--code class="cypher language-cypher"-->MATCH (t:Troll) WHERE t.partition IS NOT NULL
 WITH COLLECT(t) AS members, t.partition AS community
 ORDER BY SIZE(members) DESC LIMIT 10
 UNWIND members AS t

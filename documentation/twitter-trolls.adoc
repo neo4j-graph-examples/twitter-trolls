@@ -240,7 +240,7 @@ We can search for the Trolls with the most followers:
 
 [source,cypher]
 ----
-MATCH (u:Troll) WHERE EXISTS(u.followers_count)
+MATCH (u:Troll) WHERE u.followers_count IS NOT NULL
 RETURN u.screen_name AS screen_name, u.followers_count AS followers
 ORDER BY followers DESC LIMIT 50
 ----
@@ -510,12 +510,12 @@ We can run these algorithms in Neo4j with Cypher using the link:https://github.c
 <div class="col-lg-3">
 ++++
 
-.See what procedures are available in the algo package
+.See what procedures are available in the gds package
 [source,cypher]
 ----
 CALL dbms.procedures() 
 YIELD name, signature, description
-WITH * WHERE name STARTS WITH "algo"
+WITH * WHERE name STARTS WITH "gds"
 RETURN *
 ----
 
@@ -550,14 +550,14 @@ CALL gds.pageRank.write('amplified', {writeProperty:'pagerank'})
 .Find Trolls with highest PageRank score
 [source,cypher]
 ----
-MATCH (t:Troll) WHERE EXISTS(t.pagerank)
+MATCH (t:Troll) WHERE t.pagerank IS NOT NULL
 RETURN t.screen_name AS troll, t.pagerank AS pagerank ORDER BY pagerank DESC LIMIT 25
 ----
 
 .What are the top trolls tweeting about?
 [source,cypher]
 ----
-MATCH (t:Troll) WHERE EXISTS(t.pagerank)
+MATCH (t:Troll) WHERE t.pagerank IS NOT NULL
 WITH t ORDER BY t.pagerank LIMIT 25
 MATCH (t)-[:POSTED]->(tw:Tweet)-[:HAS_TAG]-(ht:Hashtag)
 RETURN ht.tag, COUNT(tw) AS num ORDER BY num DESC LIMIT 25
@@ -600,7 +600,7 @@ We can then see which Trolls were assigned to each community:
 
 [source,cypher]
 ----
-MATCH (t:Troll) WHERE EXISTS(t.partition)
+MATCH (t:Troll) WHERE t.partition IS NOT NULL
 RETURN COLLECT(t.screen_name) AS members, t.partition AS community
 ORDER BY SIZE(members) DESC LIMIT 10
 ----
@@ -609,7 +609,7 @@ And finally, we can see if there are certain themes that each community was focu
 
 [source,cypher]
 ----
-MATCH (t:Troll) WHERE EXISTS(t.partition)
+MATCH (t:Troll) WHERE t.partition IS NOT NULL
 WITH COLLECT(t) AS members, t.partition AS community
 ORDER BY SIZE(members) DESC LIMIT 10
 UNWIND members AS t
