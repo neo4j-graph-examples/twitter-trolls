@@ -513,9 +513,9 @@ We can run these algorithms in Neo4j with Cypher using the link:https://github.c
 .See what procedures are available in the gds package
 [source,cypher]
 ----
-CALL dbms.procedures() 
+SHOW PROCEDURES
 YIELD name, signature, description
-WITH * WHERE name STARTS WITH "gds"
+WHERE name STARTS WITH "gds"
 RETURN *
 ----
 
