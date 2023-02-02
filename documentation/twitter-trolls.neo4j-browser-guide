@@ -6,7 +6,7 @@
 */	
 @import url("//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css");
 
-.imageblock .content img, .image img {max-width: 900px;max-height: 300px;}
+.imageblock .content img, .image img {max-width: 100%;}
 .deck h3, .deck h4 {display: block !important;margin-bottom:8px;margin-top:5px;}
 .listingblock {margin:8px;}
 .pull-bottom {position:relative;bottom:1em;}
@@ -53,16 +53,17 @@
     <h3>Russian Twitter Trolls</h3>
     <br/>
     <div>
-      <div class="col-lg-4">
-<div class="paragraph">
+      <div class="paragraph">
 <p>As part of the House Intelligence Committee investigation into <strong>how Russia may have influenced the 2016 US Election</strong>, Twitter released the screen names of almost 3000 Twitter accounts believed to be connected to Russia&#8217;s Internet Research Agency, a company known for operating <strong>social media troll accounts</strong>. Twitter immediately suspended these accounts, deleting their data from Twitter.com and the Twitter API.</p>
 </div>
 <div class="paragraph">
 <p>A team at NBC News including <a href="https://twitter.com/bpopken" target="_blank">Ben Popken</a> and <a href="https://twitter.com/mrejfox" target="_blank">EJ Fox</a> was able to reconstruct a dataset consisting of  a subset of the deleted data for their investigation and using Neo4j were able to <a href="https://www.nbcnews.com/tech/social-media/russian-trolls-went-attack-during-key-election-moments-n827176" target="_blank">show how these troll accounts went on attack during key election moments.</a> <strong>NBC News open-sourced the reconstructed dataset</strong> and released it as this Neo4j database.</p>
 </div>
+<div class="imageblock">
+<div class="content">
+<img src="https://guides.neo4j.com/sandbox/twitter-trolls/img/datamodel2.png" alt="datamodel2">
 </div>
-<div class="col-lg-3">
-<img src="https://guides.neo4j.com/sandbox/twitter-trolls/img/datamodel2.png" class="img-responsive">
+</div>
 <div class="paragraph">
 <p>This interactive Neo4j Browser guide will help you to explore the dataset of Russian Troll tweets by guidng you through:</p>
 </div>
@@ -79,15 +80,16 @@
 </li>
 </ul>
 </div>
+<div class="imageblock">
+<div class="content">
+<img src="https://guides.neo4j.com/sandbox/twitter-trolls/img/article.png" alt="article">
 </div>
-<div class="col-lg-5">
-<img src="https://guides.neo4j.com/sandbox/twitter-trolls/img/article.png" class="img-responsive">
+</div>
 <div class="paragraph">
 <p>Read the NBC News story about the data <a href="https://www.nbcnews.com/tech/social-media/russian-trolls-went-attack-during-key-election-moments-n827176" target="_blank">here</a></p>
 </div>
 <div class="paragraph">
 <p><em>NOTE: Much of this content is offensive and explicit. Query with caution.</em></p>
-</div>
 </div>
 	</div>
   </div>
@@ -100,8 +102,7 @@
     <h3>The Datamodel</h3>
     <br/>
     <div>
-      <div class="col-lg-4">
-<div class="paragraph">
+      <div class="paragraph">
 <p>Neo4j uses the labeled property graph datamodel to represent data.</p>
 </div>
 
@@ -133,8 +134,6 @@
 </li>
 </ul>
 </div>
-</div>
-<div class="col-lg-3">
 
 
 
@@ -164,9 +163,11 @@
 </li>
 </ul>
 </div>
+<div class="imageblock">
+<div class="content">
+<img src="https://guides.neo4j.com/sandbox/twitter-trolls/img/datamodel.png" alt="datamodel">
 </div>
-<div class="col-lg-5">
-<img src="https://guides.neo4j.com/sandbox/twitter-trolls/img/datamodel.png" class="img-responsive">
+</div>
 <div class="paragraph">
 <p>Nodes and relationships can store arbitrary key-value pair <strong>properties</strong>. This image shows the properties and data type used in this database.</p>
 </div>
@@ -174,7 +175,6 @@
 <div class="title">Execute this query to inspect the datamodel in the database:</div>
 <div class="content">
 <pre mode="cypher"  class="highlight pre-scrollable programlisting cm-s-neo code runnable standalone-example ng-binding" data-lang="cypher" lang="cypher"><!--code class="cypher language-cypher"-->call db.schema.visualization()<!--/code--></pre>
-</div>
 </div>
 </div>
 	</div>
@@ -188,8 +188,7 @@
     <h3>Introduction To Cypher</h3>
     <br/>
     <div>
-      <div class="col-lg-5">
-<div class="paragraph">
+      <div class="paragraph">
 <p>In order to work with our labeled property graph, we need a query language for graphs.</p>
 </div>
 
@@ -224,8 +223,6 @@
 <div class="paragraph">
 <p>Be sure to use the <a href="https://neo4j.com/docs/cypher-refcard/current/?ref=browser-guide">Cypher Refcard</a> as a reference for learning Cypher syntax.</p>
 </div>
-</div>
-<div class="col-lg-7">
 
 
 
@@ -271,7 +268,6 @@ RETURN num<!--/code--></pre>
 </tr>
 </tbody>
 </table>
-</div>
 	</div>
   </div>
 </slide>
@@ -283,8 +279,7 @@ RETURN num<!--/code--></pre>
     <h3>Querying The Graph - Overview</h3>
     <br/>
     <div>
-      <div class="col-lg-6">
-<div class="paragraph">
+      <div class="paragraph">
 <p>Neo4j Browser is an interactive query workbench tool for executing Cypher queries in Neo4j and working with the results in both graph visualization and tabular forms.</p>
 </div>
 
@@ -301,8 +296,6 @@ RETURN num<!--/code--></pre>
    <div class="paragraph">
 <p>Often the answer to our question however is tabular data - for example, the result of running an aggregation. We can also return rows of scalar values in Cypher. In that case Neo4j Browser will render a table of rows.</p>
 </div>
-</div>
-<div class="col-lg-6">
 <div class="listingblock">
 <div class="title">Find tweets with the hashtag <code>thanksobama</code></div>
 <div class="content">
@@ -316,7 +309,6 @@ RETURN * LIMIT 50<!--/code--></pre>
 <pre mode="cypher"  class="highlight pre-scrollable programlisting cm-s-neo code runnable standalone-example ng-binding" data-lang="cypher" lang="cypher"><!--code class="cypher language-cypher"-->MATCH (t)
 RETURN LABELS(t), COUNT(*) AS count
 ORDER BY count DESC<!--/code--></pre>
-</div>
 </div>
 </div>
 	</div>
@@ -377,7 +369,6 @@ RETURN u<!--/code--></pre>
       <div class="paragraph">
 <p>We can specify more complex graph patterns using Cypher to search for users plus the tweets they&#8217;ve posted, and even the hashtags that those tweets contain.</p>
 </div>
-<div class="col-lg-7">
 <div class="listingblock">
 <div class="title">Tweets posted by the user LeroyLovesUSA with the hashtag thanksobama</div>
 <div class="content">
@@ -398,9 +389,10 @@ OPTIONAL MATCH p=(tw)-[:HAS_TAG|HAS_LINK|MENTIONS|IN_REPLY_TO]-(a)
 RETURN * LIMIT 50<!--/code--></pre>
 </div>
 </div>
+<div class="imageblock">
+<div class="content">
+<img src="https://guides.neo4j.com/sandbox/twitter-trolls/img/exampletweet1.png" alt="exampletweet1">
 </div>
-<div class="col-lg-5">
-<img src="https://guides.neo4j.com/sandbox/twitter-trolls/img/exampletweet1.png" class="img-responsive">
 </div>
 	</div>
   </div>
@@ -413,15 +405,14 @@ RETURN * LIMIT 50<!--/code--></pre>
     <h3>Tweet Volume</h3>
     <br/>
     <div>
-      <div class="col-lg-3">
-<img src="https://guides.neo4j.com/sandbox/twitter-trolls/img/volume.png" style="max-height: 380px;" class="img-responsive">
+      <div class="imageblock">
+<div class="content">
+<img src="https://guides.neo4j.com/sandbox/twitter-trolls/img/volume.png"%20style="max-height:%20380px;" alt="volume">
 </div>
-<div class="col-lg-9">
+</div>
 <div class="paragraph">
 <p>This chart from the <a href="https://www.nbcnews.com/tech/social-media/russian-trolls-went-attack-during-key-election-moments-n827176" target="_blank">NBC News article</a> shows that Russian Twitter troll tweet volume spiked during key election related events.</p>
 </div>
-<p></p>
-<p></p>
 <div class="listingblock">
 <div class="title">Query for tweet volume by day</div>
 <div class="content">
@@ -441,7 +432,6 @@ RETURN substring(t.created_str,0,7) AS month,
 <div class="paragraph">
 <p>We can see that much of the tweet volume occurs leading up to and immediately following the 2016 US Election.</p>
 </div>
-</div>
 	</div>
   </div>
 </slide>
@@ -453,8 +443,7 @@ RETURN substring(t.created_str,0,7) AS month,
     <h3>Hashtags</h3>
     <br/>
     <div>
-      <div class="col-lg-9">
-<div class="paragraph">
+      <div class="paragraph">
 <p>Hashtags were used by the trolls to insert themselves into conversations and gain visibility.</p>
 </div>
 <div class="listingblock">
@@ -476,12 +465,13 @@ WITH day, tag, COUNT(t) AS num ORDER BY num DESC
 RETURN day, COLLECT(tag)[..5] AS toptags ORDER BY day<!--/code--></pre>
 </div>
 </div>
+<div class="imageblock">
+<div class="content">
+<img src="https://guides.neo4j.com/sandbox/twitter-trolls/img/hashtags.png" alt="hashtags">
 </div>
-<div class="col-lg-3">
-<img src="https://guides.neo4j.com/sandbox/twitter-trolls/img/hashtags.png" class="img-responsive" style="max-height: 380px;">
+</div>
 <div class="paragraph">
 <p>This streamgraph from the <a href="https://www.nbcnews.com/tech/social-media/russian-trolls-went-attack-during-key-election-moments-n827176" target="_blank">NBC News article</a> shows hashtag volume by category.</p>
-</div>
 </div>
 	</div>
   </div>
@@ -567,8 +557,7 @@ RETURN p,ht,u LIMIT 25<!--/code--></pre>
     <h3>Inferred Relationships</h3>
     <br/>
     <div>
-      <div class="col-lg-9">
-<div class="paragraph">
+      <div class="paragraph">
 <p>Inferred relationships are important in graphs. For example, when a Troll account retweets another Troll&#8217;s tweet we could say the trolls have an inferred <strong>"AMPLIFIED"</strong> relationship: one troll is amplifying the message of the other.</p>
 </div>
 <div class="listingblock">
@@ -578,9 +567,10 @@ RETURN p,ht,u LIMIT 25<!--/code--></pre>
 RETURN p LIMIT 1<!--/code--></pre>
 </div>
 </div>
+<div class="imageblock">
+<div class="content">
+<img src="https://guides.neo4j.com/sandbox/twitter-trolls/img/amplified.png" alt="amplified">
 </div>
-<div class="col-lg-3">
-<img src="https://guides.neo4j.com/sandbox/twitter-trolls/img/amplified.png" class="img-responsive">
 </div>
 	</div>
   </div>
@@ -593,9 +583,14 @@ RETURN p LIMIT 1<!--/code--></pre>
     <h3>Graph Data Science Algorithms</h3>
     <br/>
     <div>
+<<<<<<< HEAD
       <div class="col-lg-9">
 <div class="paragraph">
 <p><a href="https://neo4j.com/docs/graph-data-science/current/" target="_blank">Graph data science algorithms</a> are a way to apply analytics to the entire graph to further enhance our understanding of the data. These algorithms fall into five major categories:</p>
+=======
+      <div class="paragraph">
+<p><a href="https://neo4j.com/graph-analytics/" target="_blank">Graph algorithms</a> are a way to apply analytics to the entire graph to further enhance our understanding of the data. These algorithms fall into three categories:</p>
+>>>>>>> 0cdc243 (change to gds.list() and cleanup guide from html markup)
 </div>
 <div class="ulist">
 <ul>
@@ -619,13 +614,17 @@ RETURN p LIMIT 1<!--/code--></pre>
 <div class="paragraph">
 <p>We can run these algorithms in Neo4j with Cypher using the <a href="https://github.com/neo4j/graph-data-science" target="_blank">Graph Data Science</a> procedures.</p>
 </div>
-</div>
-<div class="col-lg-3">
 <div class="listingblock">
+<<<<<<< HEAD
 <div class="title">See what procedures are available in the Graph Data Science library</div>
 <div class="content">
 <pre mode="cypher"  class="highlight pre-scrollable programlisting cm-s-neo code runnable standalone-example ng-binding" data-lang="cypher" lang="cypher"><!--code class="cypher language-cypher"-->CALL gds.list()<!--/code--></pre>
 </div>
+=======
+<div class="title">See what procedures are available in the gds package</div>
+<div class="content">
+<pre mode="cypher"  class="highlight pre-scrollable programlisting cm-s-neo code runnable standalone-example ng-binding" data-lang="cypher" lang="cypher"><!--code class="cypher language-cypher"-->CALL dbms.list()<!--/code--></pre>
+>>>>>>> 0cdc243 (change to gds.list() and cleanup guide from html markup)
 </div>
 </div>
 	</div>
@@ -639,8 +638,7 @@ RETURN p LIMIT 1<!--/code--></pre>
     <h3>Centrality</h3>
     <br/>
     <div>
-      <div class="col-lg-9">
-<div class="paragraph">
+      <div class="paragraph">
 <p>Let&#8217;s run PageRank over this inferred AMPLIFIED graph to find the most influential trolls</p>
 </div>
 <div class="paragraph">
@@ -675,12 +673,13 @@ MATCH (t)-[:POSTED]-&gt;(tw:Tweet)-[:HAS_TAG]-(ht:Hashtag)
 RETURN ht.tag, COUNT(tw) AS num ORDER BY num DESC LIMIT 25<!--/code--></pre>
 </div>
 </div>
+<div class="imageblock">
+<div class="content">
+<img src="https://guides.neo4j.com/sandbox/twitter-trolls/img/pagerank.png" alt="pagerank">
 </div>
-<div class="col-lg-3">
-<img src="https://guides.neo4j.com/sandbox/twitter-trolls/img/pagerank.png" class="img-responsive">
+</div>
 <div class="paragraph">
 <p>PageRank is a recursive graph algorithm that defines the importance of a node proportional to the importance and number of connected nodes in the graph.</p>
-</div>
 </div>
 	</div>
   </div>
@@ -693,8 +692,7 @@ RETURN ht.tag, COUNT(tw) AS num ORDER BY num DESC LIMIT 25<!--/code--></pre>
     <h3>Community Detection</h3>
     <br/>
     <div>
-      <div class="col-lg-9">
-<div class="paragraph">
+      <div class="paragraph">
 <p>We can also run community detection over this inferred AMPLIFIED graph to see how the graph is partitioned</p>
 </div>
 <div class="listingblock">
@@ -728,9 +726,10 @@ RETURN community, COLLECT(tag)[..10] AS toptags
 LIMIT 10<!--/code--></pre>
 </div>
 </div>
+<div class="imageblock">
+<div class="content">
+<img src="https://guides.neo4j.com/sandbox/twitter-trolls/img/community.png" alt="community">
 </div>
-<div class="col-lg-3">
-<img src="https://guides.neo4j.com/sandbox/twitter-trolls/img/community.png" class="img-responsive">
 </div>
 	</div>
   </div>
@@ -743,8 +742,7 @@ LIMIT 10<!--/code--></pre>
     <h3>Further exploration</h3>
     <br/>
     <div>
-      <div class="col-lg-4">
-
+      
 
 
    <h4>Ideas</h4>
@@ -770,8 +768,6 @@ LIMIT 10<!--/code--></pre>
 </li>
 </ul>
 </div>
-</div>
-<div class="col-lg-5">
 
 
 
@@ -788,26 +784,17 @@ LIMIT 10<!--/code--></pre>
 <p>Book (free download) <a href="http://graphdatabases.com/?ref=browser-guide" target="_blank">Graph Databases</a></p>
 </li>
 <li>
-<p>Blog <a href="https://medium.com/@david.allen_3172/using-nlp-in-neo4j-ac40bc92196f" target="_blank">Using NLP In Neo4j</a></p>
-</li>
-<li>
 <p>Blog <a href="http://www.lyonwj.com/2017/11/15/entity-extraction-russian-troll-tweets-neo4j/" target="_blank">NLP And Entity Extraction</a></p>
 </li>
 <li>
 <p>Article <a href="https://www.nbcnews.com/tech/social-media/russian-trolls-went-attack-during-key-election-moments-n827176" target="_blank">NBC News Article</a></p>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><a play-topic='https://guides.neo4j.com/sandbox/twitter-trolls/exercise.html'>Hands On Exercise</a></p>
-</li>
-</ol>
-</div>
 </li>
 </ul>
 </div>
+<div class="imageblock">
+<div class="content">
+<img src="https://guides.neo4j.com/sandbox/twitter-trolls/img/viz.png" alt="viz">
 </div>
-<div class="col-lg-3">
-<img src="https://guides.neo4j.com/sandbox/twitter-trolls/img/viz.png" class="img-responsive">
 </div>
 	</div>
   </div>
