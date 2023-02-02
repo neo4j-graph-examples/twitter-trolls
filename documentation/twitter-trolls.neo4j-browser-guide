@@ -583,14 +583,8 @@ RETURN p LIMIT 1<!--/code--></pre>
     <h3>Graph Data Science Algorithms</h3>
     <br/>
     <div>
-<<<<<<< HEAD
-      <div class="col-lg-9">
-<div class="paragraph">
-<p><a href="https://neo4j.com/docs/graph-data-science/current/" target="_blank">Graph data science algorithms</a> are a way to apply analytics to the entire graph to further enhance our understanding of the data. These algorithms fall into five major categories:</p>
-=======
       <div class="paragraph">
-<p><a href="https://neo4j.com/graph-analytics/" target="_blank">Graph algorithms</a> are a way to apply analytics to the entire graph to further enhance our understanding of the data. These algorithms fall into three categories:</p>
->>>>>>> 0cdc243 (change to gds.list() and cleanup guide from html markup)
+<p><a href="https://neo4j.com/docs/graph-data-science/current/" target="_blank">Graph data science algorithms</a> are a way to apply analytics to the entire graph to further enhance our understanding of the data. These algorithms fall into five major categories:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -615,16 +609,9 @@ RETURN p LIMIT 1<!--/code--></pre>
 <p>We can run these algorithms in Neo4j with Cypher using the <a href="https://github.com/neo4j/graph-data-science" target="_blank">Graph Data Science</a> procedures.</p>
 </div>
 <div class="listingblock">
-<<<<<<< HEAD
 <div class="title">See what procedures are available in the Graph Data Science library</div>
 <div class="content">
 <pre mode="cypher"  class="highlight pre-scrollable programlisting cm-s-neo code runnable standalone-example ng-binding" data-lang="cypher" lang="cypher"><!--code class="cypher language-cypher"-->CALL gds.list()<!--/code--></pre>
-</div>
-=======
-<div class="title">See what procedures are available in the gds package</div>
-<div class="content">
-<pre mode="cypher"  class="highlight pre-scrollable programlisting cm-s-neo code runnable standalone-example ng-binding" data-lang="cypher" lang="cypher"><!--code class="cypher language-cypher"-->CALL dbms.list()<!--/code--></pre>
->>>>>>> 0cdc243 (change to gds.list() and cleanup guide from html markup)
 </div>
 </div>
 	</div>
