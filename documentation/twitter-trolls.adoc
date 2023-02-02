@@ -488,19 +488,21 @@ RETURN p LIMIT 1
 </div>
 ++++
 
-== Graph Algorithms
+== Graph Data Science Algorithms
 
 ++++
 <div class="col-lg-9">
 ++++
 
-link:https://neo4j.com/graph-analytics/[Graph algorithms^] are a way to apply analytics to the entire graph to further enhance our understanding of the data. These algorithms fall into three categories: 
+link:https://neo4j.com/docs/graph-data-science/current/[Graph data science algorithms^] are a way to apply analytics to the entire graph to further enhance our understanding of the data. These algorithms fall into five major categories:
 
-* **Centrality** - What are the most important nodes in the network? _PageRank, Betweenness Centrality, Closeness Centrality_
-* **Community detection** - How can the graph be partitioned? _Union Find, Louvain, Label Propagation, Connected Components_
-* **Pathfinding** - What are the shortest paths or best routes available given cost? _Minimum Weight Spanning Tree, All Pairs- and Single Source- Shortest Path, Dijkstra_
+* **Centrality** - What are the most important nodes in the graph? _PageRank, Betweenness Centrality, Closeness Centrality_
+* **Community detection** - How can the graph be clustered or partitioned? _Louvain, Leiden, Label Propagation, Connected Components_
+* **Pathfinding** - What are the shortest paths or best routes available given cost? _Dijkstra, A* Shortest Path, Yen's Shortest Path, Minimum Weight Spanning Tree, Breadth-First and Depth-First Search_
+* **Similarity** - Which nodes are similar in the graph? _Node Similarity, K-Nearest Neighbor (KNN)_
+* **Embeddings** - How can we produce feature vectors based on graph structure for use in downstream analytics and ML? _FastRP, GraphSAGE, Node2vec, HashGNN_
 
-We can run these algorithms in Neo4j with Cypher using the link:https://github.com/neo4j-contrib/neo4j-graph-algorithms[Neo4j Graph Algorithms^] procedures.
+We can run these algorithms in Neo4j with Cypher using the link:https://github.com/neo4j/graph-data-science[Graph Data Science^] procedures.
 
 ++++
 </div>
@@ -510,13 +512,10 @@ We can run these algorithms in Neo4j with Cypher using the link:https://github.c
 <div class="col-lg-3">
 ++++
 
-.See what procedures are available in the gds package
+.See what procedures are available in the Graph Data Science library
 [source,cypher]
 ----
-CALL dbms.procedures() 
-YIELD name, signature, description
-WITH * WHERE name STARTS WITH "gds"
-RETURN *
+CALL gds.list()
 ----
 
 
@@ -590,7 +589,7 @@ PageRank is a recursive graph algorithm that defines the importance of a node pr
 
 We can also run community detection over this inferred AMPLIFIED graph to see how the graph is partitioned
 
-.Partition the graph into communities using the Label Propagation algorithm. An additional property `community` is added to each node specifying the community it has been assgined to by the algorithm.
+.Partition the graph into communities using the Label Propagation algorithm. An additional property `community` is added to each node specifying the community it has been assigned to by the algorithm.
 [source,cypher]
 ----
 CALL gds.labelPropagation.write('amplified', {writeProperty:'partition', relationshipWeightProperty:'weight'});

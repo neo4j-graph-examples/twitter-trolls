@@ -590,38 +590,41 @@ RETURN p LIMIT 1<!--/code--></pre>
 
 <slide class="row-fluid">
   <div class="col-sm-12">
-    <h3>Graph Algorithms</h3>
+    <h3>Graph Data Science Algorithms</h3>
     <br/>
     <div>
       <div class="col-lg-9">
 <div class="paragraph">
-<p><a href="https://neo4j.com/graph-analytics/" target="_blank">Graph algorithms</a> are a way to apply analytics to the entire graph to further enhance our understanding of the data. These algorithms fall into three categories:</p>
+<p><a href="https://neo4j.com/docs/graph-data-science/current/" target="_blank">Graph data science algorithms</a> are a way to apply analytics to the entire graph to further enhance our understanding of the data. These algorithms fall into five major categories:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Centrality</strong> - What are the most important nodes in the network? <em>PageRank, Betweenness Centrality, Closeness Centrality</em></p>
+<p><strong>Centrality</strong> - What are the most important nodes in the graph? <em>PageRank, Betweenness Centrality, Closeness Centrality</em></p>
 </li>
 <li>
-<p><strong>Community detection</strong> - How can the graph be partitioned? <em>Union Find, Louvain, Label Propagation, Connected Components</em></p>
+<p><strong>Community detection</strong> - How can the graph be clustered or partitioned? <em>Louvain, Leiden, Label Propagation, Connected Components</em></p>
 </li>
 <li>
-<p><strong>Pathfinding</strong> - What are the shortest paths or best routes available given cost? <em>Minimum Weight Spanning Tree, All Pairs- and Single Source- Shortest Path, Dijkstra</em></p>
+<p><strong>Pathfinding</strong> - What are the shortest paths or best routes available given cost? <em>Dijkstra, A* Shortest Path, Yen&#8217;s Shortest Path, Minimum Weight Spanning Tree, Breadth-First and Depth-First Search</em></p>
+</li>
+<li>
+<p><strong>Similarity</strong> - Which nodes are similar in the graph? <em>Node Similarity, K-Nearest Neighbor (KNN)</em></p>
+</li>
+<li>
+<p><strong>Embeddings</strong> - How can we produce feature vectors based on graph structure for use in downstream analytics and ML? <em>FastRP, GraphSAGE, Node2vec, HashGNN</em></p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>We can run these algorithms in Neo4j with Cypher using the <a href="https://github.com/neo4j-contrib/neo4j-graph-algorithms" target="_blank">Neo4j Graph Algorithms</a> procedures.</p>
+<p>We can run these algorithms in Neo4j with Cypher using the <a href="https://github.com/neo4j/graph-data-science" target="_blank">Graph Data Science</a> procedures.</p>
 </div>
 </div>
 <div class="col-lg-3">
 <div class="listingblock">
-<div class="title">See what procedures are available in the algo package</div>
+<div class="title">See what procedures are available in the Graph Data Science library</div>
 <div class="content">
-<pre mode="cypher"  class="highlight pre-scrollable programlisting cm-s-neo code runnable standalone-example ng-binding" data-lang="cypher" lang="cypher"><!--code class="cypher language-cypher"-->CALL dbms.procedures()
-YIELD name, signature, description
-WITH * WHERE name STARTS WITH "algo"
-RETURN *<!--/code--></pre>
+<pre mode="cypher"  class="highlight pre-scrollable programlisting cm-s-neo code runnable standalone-example ng-binding" data-lang="cypher" lang="cypher"><!--code class="cypher language-cypher"-->CALL gds.list()<!--/code--></pre>
 </div>
 </div>
 </div>
@@ -695,7 +698,7 @@ RETURN ht.tag, COUNT(tw) AS num ORDER BY num DESC LIMIT 25<!--/code--></pre>
 <p>We can also run community detection over this inferred AMPLIFIED graph to see how the graph is partitioned</p>
 </div>
 <div class="listingblock">
-<div class="title">Partition the graph into communities using the Label Propagation algorithm. An additional property <code>community</code> is added to each node specifying the community it has been assgined to by the algorithm.</div>
+<div class="title">Partition the graph into communities using the Label Propagation algorithm. An additional property <code>community</code> is added to each node specifying the community it has been assigned to by the algorithm.</div>
 <div class="content">
 <pre mode="cypher"  class="highlight pre-scrollable programlisting cm-s-neo code runnable standalone-example ng-binding" data-lang="cypher" lang="cypher"><!--code class="cypher language-cypher"-->CALL gds.labelPropagation.write('amplified', {writeProperty:'partition', relationshipWeightProperty:'weight'});<!--/code--></pre>
 </div>
