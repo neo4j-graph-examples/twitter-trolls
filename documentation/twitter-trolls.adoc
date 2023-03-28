@@ -274,7 +274,7 @@ Tweets can be retweets of other tweets or "original content" tweets that do not 
 [source,cypher]
 ----
 MATCH p=(t:Troll {user_key: "ten_gop"})-[:POSTED]->(tw:Tweet)
-WHERE NOT EXISTS((tw)-[:RETWEETED|IN_REPLY_TO]->(:Tweet))
+WHERE NOT EXISTS {(tw)-[:RETWEETED|IN_REPLY_TO]->(:Tweet)}
 OPTIONAL MATCH (ht:Hashtag)<-[:HAS_TAG]-(tw)
 OPTIONAL MATCH (u:User)<-[:MENTIONS]-(tw)
 RETURN p,ht,u LIMIT 25

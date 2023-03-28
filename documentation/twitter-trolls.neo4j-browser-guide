@@ -540,7 +540,7 @@ ORDER BY tweets DESC<!--/code--></pre>
 <div class="title">Find original content tweets posted by user @TEN_GOP</div>
 <div class="content">
 <pre mode="cypher"  class="highlight pre-scrollable programlisting cm-s-neo code runnable standalone-example ng-binding" data-lang="cypher" lang="cypher"><!--code class="cypher language-cypher"-->MATCH p=(t:Troll {user_key: "ten_gop"})-[:POSTED]-&gt;(tw:Tweet)
-WHERE NOT EXISTS((tw)-[:RETWEETED|IN_REPLY_TO]-&gt;(:Tweet))
+WHERE NOT EXISTS {(tw)-[:RETWEETED|IN_REPLY_TO]-&gt;(:Tweet)}
 OPTIONAL MATCH (ht:Hashtag)&lt;-[:HAS_TAG]-(tw)
 OPTIONAL MATCH (u:User)&lt;-[:MENTIONS]-(tw)
 RETURN p,ht,u LIMIT 25<!--/code--></pre>
